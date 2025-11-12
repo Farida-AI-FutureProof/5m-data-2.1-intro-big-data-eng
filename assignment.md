@@ -15,6 +15,23 @@ Question: From the `movies` collection, return the documents with the `plot` tha
 Answer:
 
 ```python
+# Import required libraries
+from pymongo import MongoClient
+
+# Connect to MongoDB (update connection string as needed)
+client = MongoClient("mongodb://localhost:27017/")
+db = client['sample_mflix']
+collection = db['movies']
+
+# Query: find movies where plot starts with "war", sort by released, project selected fields, limit 5
+results = collection.find(
+    {"plot": {"$regex": r"^war", "$options": "i"}},
+    {"_id": 0, "title": 1, "plot": 1, "released": 1}
+).sort("released", 1).limit(5)
+
+# Print results
+for movie in results:
+    print(movie)
 
 ```
 
@@ -25,6 +42,14 @@ Question: Group by `rated` and count the number of movies in each.
 Answer:
 
 ```python
+# Group movies by 'rated' and count number in each category
+pipeline = [
+    {"$group": {"_id": "$rated", "count": {"$sum": 1}}},
+    {"$sort": {"count": -1}}
+]
+
+for doc in collection.aggregate(pipeline):
+    print(doc)
 
 ```
 
@@ -35,6 +60,9 @@ Question: Count the number of movies with 3 comments or more.
 Answer:
 
 ```python
+# Count movies with 3 or more comments
+count = collection.count_documents({"num_mflix_comments": {"$gte": 3}})
+print("Number of movies with 3 or more comments:", count)
 
 ```
 
