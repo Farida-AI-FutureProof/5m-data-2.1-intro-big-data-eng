@@ -70,3 +70,5 @@ print("Number of movies with 3 or more comments:", count)
 
 - Submit the URL of the GitHub Repository that contains your work to NTU black board.
 - Should you reference the work of your classmate(s) or online resources, give them credit by adding either the name of your classmate or URL.
+
+## Credit: This solution was developed collaboratively with ChatGPT (OpenAI GPT-5) for learning purpose, I have tested each part
